@@ -11,9 +11,9 @@ type tokenCase struct {
 	expectedLiteral string
 }
 
-func assertTokens(t *testing.T, input string, wants []tokenCase, newLexer func(string) *Lexer) {
+func assertTokens(t *testing.T, input string, wants []tokenCase) {
 	t.Helper() // 报错时定位到调用处
-	l := newLexer(input)
+	l := New(input)
 
 	for i, w := range wants {
 		tok := l.NextToken()
@@ -42,7 +42,7 @@ func TestNextToken0(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	assertTokens(t, input, tests, New)
+	assertTokens(t, input, tests)
 
 }
 func TestNextToken1(t *testing.T) {
@@ -94,7 +94,7 @@ func TestNextToken1(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	assertTokens(t, input, tests, New)
+	assertTokens(t, input, tests)
 
 }
 
@@ -119,7 +119,7 @@ func TestNextToken2(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	assertTokens(t, input, tests, New)
+	assertTokens(t, input, tests)
 }
 
 func TestNextToken3(t *testing.T) {
@@ -151,7 +151,7 @@ func TestNextToken3(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	assertTokens(t, input, tests, New)
+	assertTokens(t, input, tests)
 }
 
 func TestNextToken4(t *testing.T) {
@@ -172,5 +172,5 @@ func TestNextToken4(t *testing.T) {
 		{token.EOF, ""},
 	}
 
-	assertTokens(t, input, tests, New)
+	assertTokens(t, input, tests)
 }
