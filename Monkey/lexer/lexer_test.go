@@ -18,7 +18,7 @@ func assertTokens(t *testing.T, input string, wants []tokenCase, newLexer func(s
 	for i, w := range wants {
 		tok := l.NextToken()
 		if tok.Type != w.expectedType || tok.Literal != w.expectedLiteral {
-			t.Errorf("case[%d] mismatch:\n  want: {type=%q, literal=%q}\n  got : {type=%q, literal=%q}",
+			t.Fatalf("case[%d] mismatch:\n  want: {type=%q, literal=%q}\n  got : {type=%q, literal=%q}",
 				i, w.expectedType, w.expectedLiteral, tok.Type, tok.Literal)
 		}
 	}
@@ -49,7 +49,7 @@ func TestNextToken1(t *testing.T) {
 	input := `let five = 5;
 	let ten = 10;
 	let add = fn(x, y) {
-		x + y
+		x + y;
 	};
 	let result = add(five, ten);
 	`
