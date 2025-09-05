@@ -46,8 +46,8 @@ func TestNextToken0(t *testing.T) {
 
 }
 func TestNextToken1(t *testing.T) {
-	input := `let five5 = 5;
-	let ten10 = 10;
+	input := `let five = 5;
+	let ten = 10;
 	let add = fn(x, y) {
 		x + y;
 	};
@@ -56,12 +56,12 @@ func TestNextToken1(t *testing.T) {
 
 	tests := []tokenCase{
 		{token.LET, "let"},
-		{token.IDENT, "five5"},
+		{token.IDENT, "five"},
 		{token.ASSIGN, "="},
 		{token.INT, "5"},
 		{token.SEMICOLON, ";"},
 		{token.LET, "let"},
-		{token.IDENT, "ten10"},
+		{token.IDENT, "ten"},
 		{token.ASSIGN, "="},
 		{token.INT, "10"},
 		{token.SEMICOLON, ";"},
@@ -168,6 +168,30 @@ func TestNextToken4(t *testing.T) {
 		{token.INT, "10"},
 		{token.NOT_EQ, "!="},
 		{token.INT, "9"},
+		{token.SEMICOLON, ";"},
+		{token.EOF, ""},
+	}
+
+	assertTokens(t, input, tests)
+}
+
+func TestNextToken5(t *testing.T) {
+	input := `
+	let s0 = "hello";
+	let s1 = "world
+	!";
+	`
+
+	tests := []tokenCase{
+		{token.LET, "let"},
+		{token.IDENT, "s0"},
+		{token.ASSIGN, "="},
+		{token.STRING, "hello"},
+		{token.SEMICOLON, ";"},
+		{token.LET, "let"},
+		{token.IDENT, "s1"},
+		{token.ASSIGN, "="},
+		{token.STRING, "world\n\t!"},
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}

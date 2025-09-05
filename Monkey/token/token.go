@@ -5,6 +5,8 @@ type TokenType string
 type Token struct {
 	Type    TokenType
 	Literal string
+	Line    int
+	Column  int
 }
 
 const (
@@ -12,8 +14,9 @@ const (
 	EOF     = "EOF"
 
 	// 标识符+字面量
-	IDENT = "IDENT" // add, foobar, x, y
-	INT   = "INT"   // 123456
+	IDENT  = "IDENT"  // add, foobar, x, y
+	INT    = "INT"    // 123456
+	STRING = "STRING" // "hello"
 
 	// 运算符
 	ASSIGN   = "="
@@ -43,6 +46,7 @@ const (
 	LET      = "LET"
 	TRUE     = "TRUE"
 	FALSE    = "FALSE"
+	NULL     = "NULL"
 	IF       = "IF"
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
@@ -53,6 +57,7 @@ var keywords = map[string]TokenType{
 	"let":    LET,
 	"true":   TRUE,
 	"false":  FALSE,
+	"null":   NULL,
 	"if":     IF,
 	"else":   ELSE,
 	"return": RETURN,
@@ -63,4 +68,12 @@ func LookupIdent(ident string) TokenType {
 		return tok
 	}
 	return IDENT
+}
+
+func NewByteToken(tokenType TokenType, ch byte, line int, column int) Token {
+	return Token{Type: tokenType, Literal: string(ch), Line: line, Column: column}
+}
+
+func NewStringToken(tokenType TokenType, ch string, line int, column int) Token {
+	return Token{Type: tokenType, Literal: ch, Line: line, Column: column}
 }
