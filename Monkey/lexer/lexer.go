@@ -144,8 +144,9 @@ func (l *Lexer) readString() string {
 
 func (l *Lexer) skipWhitespace() {
 	for l.ch == ' ' || l.ch == '\t' || l.ch == '\n' || l.ch == '\r' {
+		curCh := l.ch
 		l.readChar()
-		if l.ch == '\n' {
+		if curCh == '\n' {
 			l.Line += 1
 			l.Column = 1
 		}
